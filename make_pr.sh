@@ -1,30 +1,9 @@
 #!/usr/bin/env bash
 
 getTargetBranch() {
-    local current_branch
-    current_branch=$(git rev-parse --abbrev-ref HEAD)
-
+    # Tried determine the parent branch but didn't find no one stable solution
     # Will change main to your target branch
-    is_updated_from_main="$(
-        git log --graph --decorate --simplify-by-decoration --oneline |
-            grep -c "Merge branch 'main' into $current_branch"
-    )"
-
-    # Will change main to your target branch
-    is_updated_from_main="$(
-        git log --graph --decorate --simplify-by-decoration --oneline |
-            grep -c "Merge branch 'origin/main' into $current_branch"
-    )"
-
-    # Will change target_branch from main to your target branch
-    local target_branch
-    if [ "$is_updated_from_main" != 0 ]; then
-        target_branch="main"
-    else
-         git log --pretty=format:'%D' HEAD^ | grep 'origin/' | head -n1 | sed 's@origin/@@' | sed 's@,.*@@'
-    fi
-
-    echo "$target_branch"
+    echo "dev"
 }
 
 # Current branch is: JIRA-1916-fix-crash-on-main-screen
